@@ -1,0 +1,32 @@
+[package]
+name = "concprog"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name="intro"
+path="src/intro.rs"
+
+[[bin]]
+name="scoped"
+path="src/scoped.rs"
+
+[[bin]]
+name="sharedown"
+path="src/sharedown.rs"
+
+[[bin]]
+name="interiormut"
+path="src/interiormut.rs"
+
+[[bin]]
+name="mutexes"
+path="src/mutexes.rs"
+
+[[bin]]
+name="waitpark"
+path="src/waitpark.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
