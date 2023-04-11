@@ -43,19 +43,27 @@ fn main() {
     println!("{result}");
 
     let mut counter = count_from(0);
-    {println!("{}", counter());}
-    {println!("{}", counter());}
-    {println!("{}", counter());}
-    {println!("{}", counter());}
-    
+    {
+        println!("{}", counter());
+    }
+    {
+        println!("{}", counter());
+    }
+    {
+        println!("{}", counter());
+    }
+    {
+        println!("{}", counter());
+    }
+
     let result = calc(10, 4, |a, b| a - b);
     println!("{result}");
-    let result = (1..=100).into_iter()
-    .map(|d|{
-        d.to_string()
-    })
-    .collect::<Vec<String>>();
-    
+    let result = (1..=100)
+        .into_iter()
+        .filter(|d| *d % 2 == 0)
+        .map(|d| d.to_string())
+        .collect::<Vec<String>>();
+
     println!("{result:?}");
 }
 
@@ -82,7 +90,7 @@ fn filter<A>(input: Vec<A>, f: Predicate<A>) -> Vec<A> {
 
 fn count_from(start: i32) -> impl FnMut() -> i32 {
     let mut s = start;
-    move ||{
+    move || {
         s += 1;
         s
     }
