@@ -51,6 +51,10 @@ path="src/synchronization.rs"
 name="lazy"
 path="src/lazy.rs"
 
+[[bin]]
+name="threadpool"
+path="src/threadpool.rs"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
