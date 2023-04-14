@@ -55,6 +55,18 @@ path="src/lazy.rs"
 name="threadpool"
 path="src/threadpool.rs"
 
+[[bin]]
+name="prmultithread"
+path="src/prmultithread.rs"
+
+[[bin]]
+name="statistics"
+path="src/statistics.rs"
+
+[[bin]]
+name="idallocation"
+path="src/idallocation.rs"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]

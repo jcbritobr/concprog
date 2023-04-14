@@ -1,19 +1,17 @@
 use std::{
-    sync::{
-        mpsc,
-        Arc, Mutex,
-    },
-    thread, time::Duration,
+    sync::{mpsc, Arc, Mutex},
+    thread,
+    time::Duration,
 };
 
 struct ThreadPool {
-    buffer: Vec<Worker>,
+    _buffer: Vec<Worker>,
     sender: mpsc::Sender<Job>,
 }
 
 struct Worker {
-    id: usize,
-    handle: thread::JoinHandle<()>,
+    _id: usize,
+    _handle: thread::JoinHandle<()>,
 }
 
 type Job = Box<dyn FnOnce() + Send + Sync + 'static>;
@@ -24,7 +22,10 @@ impl Worker {
             let job = receiver.lock().unwrap().recv().unwrap();
             job();
         });
-        Self { id, handle }
+        Self {
+            _id: id,
+            _handle: handle,
+        }
     }
 }
 
@@ -36,7 +37,10 @@ impl ThreadPool {
         for id in 0..size {
             buffer.push(Worker::new(id, Arc::clone(&receiver)));
         }
-        ThreadPool { buffer, sender }
+        ThreadPool {
+            _buffer: buffer,
+            sender,
+        }
     }
 
     fn execute<F>(&self, f: F)
@@ -48,24 +52,22 @@ impl ThreadPool {
     }
 }
 
-
 fn main() {
     let buffer = Arc::new(Mutex::new(vec![1]));
     let pool = ThreadPool::new(3);
 
-
     for _ in 0..10 {
         let buffer = Arc::clone(&buffer);
-        pool.execute(move ||{
+        pool.execute(move || {
             for i in 0..10 {
                 let mut data = buffer.lock().unwrap();
                 data.push(i);
             }
         });
     }
-    
+
     thread::sleep(Duration::from_secs(3));
-    
+
     let data = Arc::try_unwrap(buffer).unwrap();
     let data = data.into_inner().unwrap();
     println!("{data:?}");
