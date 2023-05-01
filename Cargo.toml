@@ -67,6 +67,14 @@ path="src/statistics.rs"
 name="idallocation"
 path="src/idallocation.rs"
 
+[[bin]]
+name="compexop"
+path="src/compexop.rs"
+
+[[bin]]
+name="channels"
+path="src/channels.rs"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]

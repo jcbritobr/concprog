@@ -1,14 +1,55 @@
-use std::sync::atomic::{AtomicI32, Ordering::Relaxed};
+use std::fmt::Display;
+
+struct Person {
+    name: Option<String>,
+    surname: Option<String>,
+}
+
+impl Person {
+    fn get_name(&self) -> Option<&str> {
+        self.name.as_deref()
+    }
+
+    fn get_surname(&self) -> Option<&str> {
+        self.surname.as_deref()
+    }
+}
+
+impl Display for Person {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let name = self.name.as_deref().unwrap_or("");
+        let surname = self.surname.as_deref().unwrap_or("");
+
+        write!(f, "name:{}, surname:{}", name, surname)
+    }
+}
+
+fn print_data(data: Option<&str>) {
+    if let Some(value) = data {
+        println!("{value}")
+    }
+}
 
 fn main() {
-    let a = AtomicI32::new(100);
-    let b = a.fetch_add(23, Relaxed);
-    let c = a.load(Relaxed);
+    let person = Person {
+        name: Some("Julio".to_owned()),
+        surname: Some("Brito".to_owned()),
+    };
+    let name = person.get_name();
+    let surname = person.get_surname();
+    print_data(name);
+    print_data(surname);
 
-    assert_eq!(b, 100);
-    assert_eq!(c, 123);
+    let none = Person {
+        name: None,
+        surname: None,
+    };
+    let name = none.get_name();
+    let surname = none.get_surname();
+    print_data(name);
+    print_data(surname);
 
-    println!("{a:?}");
-    println!("{b:?}");
-    println!("{c:?}");
+    println!("{person}");
+
+    println!("end of processing")
 }
